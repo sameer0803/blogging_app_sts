@@ -1,5 +1,6 @@
 package com.codewithsameer.blog.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 import com.codewithsameer.blog.config.AppConstant;
 import com.codewithsameer.blog.payloads.APIResponse;
 import com.codewithsameer.blog.payloads.PostDto;
 import com.codewithsameer.blog.payloads.PostResponse;
+import com.codewithsameer.blog.services.FileService;
 import com.codewithsameer.blog.services.PostService;
 
 @RestController
@@ -27,6 +29,11 @@ public class PostController {
 
 	@Autowired
 	private PostService postService;
+
+	@Autowired
+	private FileService fileService;
+
+	String path = "images";
 
 	@PostMapping("/userId/{userId}/category/{categoyId}/posts")
 	public ResponseEntity<PostDto> createCategory(@RequestBody PostDto PostDto, @PathVariable("userId") Integer userId,
@@ -57,7 +64,6 @@ public class PostController {
 		PostResponse allPost = this.postService.getAllPost(pageNumber, pageSize, sortBy, sortDir);
 		return new ResponseEntity<PostResponse>(allPost, HttpStatus.OK);
 	}
-	
 
 	@GetMapping("/{postId}")
 	public ResponseEntity<PostDto> getPostById(@PathVariable Integer postId) {
@@ -76,16 +82,30 @@ public class PostController {
 		this.postService.deletePost(postId);
 		return new APIResponse("Post is sucessfully deleted", true);
 	}
-	
-	//search 
-	
+
+	// search
+
 	@GetMapping("/get/{search}")
 	public ResponseEntity<List<PostDto>> searchByTitle(@PathVariable("search") String search) {
 		List<PostDto> searchPosts = this.postService.searchPosts(search);
-		return new ResponseEntity<List<PostDto>> (searchPosts, HttpStatus.OK);
+		return new ResponseEntity<List<PostDto>>(searchPosts, HttpStatus.OK);
 	}
-	
-	
-	
+
+	@PutMapping("update/{postId}")
+	public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable("postId") Integer postId) {
+
+		PostDto updatePost = this.postService.updatePost(postDto, postId);
+		return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);
+	}
+
+	@PostMapping("/post/image/upload/{postID}")
+	public ResponseEntity<PostDto> uploadImage(@RequestParam("image") MultipartFile image,
+			@PathVariable("postID") Integer postID) throws IOException {
+		PostDto postById = this.postService.getPostById(postID);
+		String ImageName = this.fileService.uploadImage(path, image);		
+		postById.setImageName(ImageName);
+		PostDto updatePost = this.postService.updatePost(postById, postID);
+		return new ResponseEntity<>(updatePost, HttpStatus.CREATED);
+	}
 
 }

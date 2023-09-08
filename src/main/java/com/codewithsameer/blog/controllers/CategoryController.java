@@ -56,25 +56,23 @@ public class CategoryController {
 	}
 
 	@GetMapping("/get/{Id}")
-	public ResponseEntity<CategoryDto> getAllUsers(
-			@PathVariable("Id") Integer Id) {
-	CategoryDto cat=this.categoryService.getCategory(Id);
+	public ResponseEntity<CategoryDto> getAllUsers(@PathVariable("Id") Integer Id) {
+		CategoryDto cat = this.categoryService.getCategory(Id);
 		return ResponseEntity.ok(cat);
 	}
-	
+
 	@PutMapping("/update/{Id}")
-	public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto updateDto,@PathVariable Integer Id) {
-		CategoryDto categoryDto = this.categoryService.updateCategory(updateDto,Id);
+	public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto updateDto,
+			@PathVariable Integer Id) {
+		CategoryDto categoryDto = this.categoryService.updateCategory(updateDto, Id);
 		return new ResponseEntity<>(categoryDto, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{Id}")
 	public ResponseEntity<APIResponse> deleteCategory(@PathVariable Integer Id) {
-		 this.categoryService.deleteCategory(Id);
-		 return new ResponseEntity<APIResponse>(new APIResponse("User Deleted Successfully",true), HttpStatus.OK);
-	 
+		this.categoryService.deleteCategory(Id);
+		return new ResponseEntity<>(new APIResponse("User Deleted Successfully", true), HttpStatus.OK);
+
 	}
-	
-	
 
 }
