@@ -33,7 +33,7 @@ public class PostController {
 	@Autowired
 	private FileService fileService;
 
-	String path = "images";
+	String path = "src/main/resources/images/";
 
 	@PostMapping("/userId/{userId}/category/{categoyId}/posts")
 	public ResponseEntity<PostDto> createCategory(@RequestBody PostDto PostDto, @PathVariable("userId") Integer userId,
@@ -102,7 +102,7 @@ public class PostController {
 	public ResponseEntity<PostDto> uploadImage(@RequestParam("image") MultipartFile image,
 			@PathVariable("postID") Integer postID) throws IOException {
 		PostDto postById = this.postService.getPostById(postID);
-		String ImageName = this.fileService.uploadImage(path, image);		
+		String ImageName = this.fileService.uploadImage(path, image);
 		postById.setImageName(ImageName);
 		PostDto updatePost = this.postService.updatePost(postById, postID);
 		return new ResponseEntity<>(updatePost, HttpStatus.CREATED);

@@ -36,22 +36,10 @@ public class UserEntity {
 	//cascade:-  parent hataaye to child bhi hat jaaye,parent add kre to child se alg save na krna pde
 	//fetch :- parent nikale to child na nikle
 	private List<Post> posts=new ArrayList<>();
+	
 
-
-	public UserEntity(int id, String name, String email, String password, String about, List<Post> posts) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.about = about;
-		this.posts = posts;
-	}
-
-
-	public UserEntity() {
-		super();
-	}
+	@OneToMany(mappedBy ="users",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Comment> comments=new ArrayList<>();
 
 
 	public int getId() {
@@ -112,5 +100,34 @@ public class UserEntity {
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
+
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+
+	public UserEntity(int id, String name, String email, String password, String about, List<Post> posts,
+			List<Comment> comments) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.about = about;
+		this.posts = posts;
+		this.comments = comments;
+	}
+
+
+	public UserEntity() {
+		super();
+	}
+
 
 }
