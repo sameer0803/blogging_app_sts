@@ -49,7 +49,7 @@ public class CategoryController {
 		return new ResponseEntity<>(categoryDto, HttpStatus.OK);
 	}
 
-	@GetMapping("/getAll")
+	@GetMapping("/getAlll")
 	public ResponseEntity<List<CategoryDto>> getAllUsers() {
 		List<CategoryDto> categoryList = this.categoryService.getAllCategories();
 		return ResponseEntity.ok(categoryList);
