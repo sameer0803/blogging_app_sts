@@ -36,7 +36,7 @@ public class PostController {
 	String path = "src/main/resources/images/";
 
 	@PostMapping("/userId/{userId}/category/{categoyId}/posts")
-	public ResponseEntity<PostDto> createCategory(@RequestBody PostDto PostDto, @PathVariable("userId") Integer userId,
+	public ResponseEntity<PostDto> createPost(@RequestBody PostDto PostDto, @PathVariable("userId") Integer userId,
 			@PathVariable("categoyId") Integer categoyId) {
 		PostDto postDto = this.postService.createPost(PostDto, userId, categoyId);
 		return new ResponseEntity<>(postDto, HttpStatus.CREATED);
@@ -80,7 +80,7 @@ public class PostController {
 	@DeleteMapping("/post/{postId}")
 	public APIResponse deletePostById(@PathVariable Integer postId) {
 		this.postService.deletePost(postId);
-		return new APIResponse("Post is sucessfully deleted", true);
+		return new APIResponse("Comment is sucessfully deleted", true);
 	}
 
 	// search

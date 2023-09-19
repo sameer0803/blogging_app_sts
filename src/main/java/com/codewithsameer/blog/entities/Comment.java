@@ -65,6 +65,11 @@ public class Comment {
 	public void setUsers(UserEntity users) {
 		this.users = users;
 	}
+
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", content=" + content + ", post=" + post + ", users=" + users + "]";
+	}
 	
 	
 	

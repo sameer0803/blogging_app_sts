@@ -1,4 +1,4 @@
-package com.codewithsameer.blog.impl;
+ package com.codewithsameer.blog.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +55,13 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<CategoryDto> getAllCategories() {
 		List<CategoriesEntity> list = this.categoryRepo.findAll();
-		List<CategoryDto> categoryList = list.stream().map(user -> this.EntityToDto(user)).collect(Collectors.toList());
+		
+		
+		List<CategoryDto> categoryList = list.stream().map(category -> this.EntityToDto(category)).collect(Collectors.toList());
+		
+		
+		
+		
 		return categoryList;
 	}
 

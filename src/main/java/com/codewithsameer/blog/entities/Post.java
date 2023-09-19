@@ -39,6 +39,7 @@ public class Post {
 	private UserEntity user;
 
 	@OneToMany(mappedBy ="post",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	
 	private Set<Comment> comments =new HashSet<>();
 
 	public Integer getPostId() {

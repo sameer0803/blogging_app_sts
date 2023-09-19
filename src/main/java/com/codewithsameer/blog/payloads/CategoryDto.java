@@ -14,6 +14,8 @@ public class CategoryDto {
 	@NotEmpty
 	@Size(min = 3, max = 40, message = "Username must be of 5 characters and 100 characters")
 	private String categoryDescription;
+	
+	
 
 	public Integer getCategoryId() {
 		return categoryId;
