@@ -91,9 +91,23 @@ public class CommentServiceImpl implements CommentService {
 	public List<CommentDto> getAllComments() {
 
 		List<Comment> allCommentList = this.commentRepo.findAll();
+		
+		List<CommentDto> DtoList = allCommentList.stream().map((content) -> this.EntityToDto(content))
+				.collect(Collectors.toList());
+
+
+		for (Comment commentEntity : allCommentList) {
+			
+			commentEntity.getPost().getPostId();
+			
+			
+			
+		
+		}
 
 		List<CommentDto> DtoList = allCommentList.stream().map((content) -> this.EntityToDto(content))
 				.collect(Collectors.toList());
+		
 
 		
 		for (Comment commentEntity : allCommentList) {
