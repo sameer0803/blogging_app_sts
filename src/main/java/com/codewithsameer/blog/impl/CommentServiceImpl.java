@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
 		comment.setPost(post);
 		comment.setUsers(user);
 		Comment savedComment = commentRepo.save(comment);
-		
+
 		CommentDto commentDTO = this.modelMapper.map(savedComment, CommentDto.class);
 		commentDTO.setUser(this.modelMapper.map(user, UserDto.class));
 		commentDTO.setPostDtoID(post.getPostId());
@@ -76,9 +76,9 @@ public class CommentServiceImpl implements CommentService {
 		UserDto userDto = this.modelMapper.map(users, UserDto.class);
 
 		CommentDto commentDto = this.modelMapper.map(comment, CommentDto.class);
-		
-		Integer postId = comment.getPost().getPostId(); 
-		
+
+		Integer postId = comment.getPost().getPostId();
+
 		commentDto.setPostDtoID(postId);
 
 		commentDto.setUser(userDto);
@@ -91,42 +91,26 @@ public class CommentServiceImpl implements CommentService {
 	public List<CommentDto> getAllComments() {
 
 		List<Comment> allCommentList = this.commentRepo.findAll();
-		
-		List<CommentDto> DtoList = allCommentList.stream().map((content) -> this.EntityToDto(content))
-				.collect(Collectors.toList());
-
-
-		for (Comment commentEntity : allCommentList) {
-			
-			commentEntity.getPost().getPostId();
-			
-			
-			
-		
-		}
 
 		List<CommentDto> DtoList = allCommentList.stream().map((content) -> this.EntityToDto(content))
 				.collect(Collectors.toList());
-		
 
-		
 		for (Comment commentEntity : allCommentList) {
 
-			UserDto userdto = this.modelMapper.map(commentEntity.getUsers(), UserDto.class);
-			
-			for (CommentDto commentDto : DtoList) {
-				
-				if(commentEntity.getPost().getPostId().equals(commentDto.getPostDtoID()))
-				{
-					commentDto.setUser(userdto);
+			for (CommentDto commentDTO : DtoList) {
+
+				if (commentEntity.getId() == commentDTO.getId()) {
+
+					commentDTO.setUser(this.modelMapper.map(commentEntity.getUsers(), UserDto.class));
+					System.out.println("" + commentDTO.getUser());
+
+					commentDTO.setPostDtoID((this.modelMapper.map(commentEntity.getPost(), PostDto.class)).getId());
+
 				}
-				
-				
 			}
+
 		}
-		
-		
-		
+
 		return DtoList;
 	}
 

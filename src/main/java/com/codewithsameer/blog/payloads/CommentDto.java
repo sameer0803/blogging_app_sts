@@ -6,6 +6,8 @@ public class CommentDto {
 	private String content;
 	private UserDto user;	
 	private Integer postDtoID;
+	
+	
 	public CommentDto(int id, String content, UserDto user, Integer postDtoID) {
 		super();
 		this.id = id;
