@@ -1,20 +1,14 @@
 package com.codewithsameer.blog.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.codewithsameer.blog.entities.CategoriesEntity;
 import com.codewithsameer.blog.entities.Comment;
 import com.codewithsameer.blog.entities.Post;
 import com.codewithsameer.blog.entities.UserEntity;
 import com.codewithsameer.blog.exceptions.ResourceNotFoundException;
-import com.codewithsameer.blog.payloads.CategoryDto;
 import com.codewithsameer.blog.payloads.CommentDto;
 import com.codewithsameer.blog.payloads.PostDto;
 import com.codewithsameer.blog.payloads.UserDto;
@@ -112,11 +106,6 @@ public class CommentServiceImpl implements CommentService {
 		}
 
 		return DtoList;
-	}
-
-	private Comment dtoToEntity(CommentDto commentDto) {
-		Comment comment = this.modelMapper.map(commentDto, Comment.class);
-		return comment;
 	}
 
 	public CommentDto EntityToDto(Comment comment) {
