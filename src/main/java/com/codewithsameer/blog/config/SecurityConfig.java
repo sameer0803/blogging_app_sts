@@ -17,6 +17,7 @@ public class SecurityConfig {
 	                .authorizeHttpRequests((authorize)->authorize.anyRequest().authenticated()
 	                ).httpBasic(Customizer.withDefaults());
 
+	        
 	        return httpSecurity.build();
 	    }
 	  
